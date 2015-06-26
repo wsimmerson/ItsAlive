@@ -1,6 +1,6 @@
 <div style="margin-top: 50px;">
   <div map-lazy-load="http://maps.google.com/maps/api/js">
-    <map center="42.2928590,-82.9147780" zoom="10" map-type-id="satellite" style="height: 500px;">
+    <map center="42.2928590,-82.9147780" zoom="11" map-type-id="satellite" style="height: 500px;">
       <marker ng-repeat="loc in services"
               position="{{loc.address}}"
               title="{{loc.status}}: {{loc.name}} - {{loc.address}}"
