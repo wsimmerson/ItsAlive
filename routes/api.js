@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
       }
       else {
         services.success = true;
-        res.json(services);
+        res.json({success:true, services:services});
       }
     })
     .catch(function(err) {

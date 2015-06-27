@@ -1,11 +1,33 @@
 <div style="margin-top: 50px;">
-  <div map-lazy-load="http://maps.google.com/maps/api/js">
-    <map center="42.2928590,-82.9147780" zoom="11" map-type-id="satellite" style="height: 500px;">
-      <marker ng-repeat="loc in services"
-              position="{{loc.address}}"
-              title="{{loc.status}}: {{loc.name}} - {{loc.address}}"
-              icon="/images/{{loc.status}}.png">
-      </marker>
-    </map>
+  <div class="col-sm-12 col-md-4">
+    <a href="/new" class="btn btn-xs btn-primary pull-right" title="Add Service">
+      <span class="glyphicon glyphicon-plus"></span>
+    </a>
+    <table class="table table-striped table-condensed">
+      <tr ng-repeat="service in services | filter:{status: 'down'} track by $index">
+        <td><img src="/images/{{service.status}}.png"></td>
+        <td><a href="/service/{{service.id}}">{{service.name}}</a><br> {{service.address}}</td>
+      </tr>
+      <tr ng-repeat="service in services | filter:{status: 'warning'} track by $index">
+        <td><img src="/images/{{service.status}}.png"></td>
+        <td><a href="/service/{{service.id}}">{{service.name}}</a><br> {{service.address}}</td>
+      </tr>
+      <tr ng-repeat="service in services | filter:{starus: 'up'} track by $index">
+        <td><img src="/images/{{service.status}}.png"></td>
+        <td><a href="/service/{{service.id}}">{{service.name}}</a><br> {{service.address}}</td>
+      </tr>
+
+    </table>
+  </div>
+  <div class="col-sm-12 col-md-8">
+    <div map-lazy-load="http://maps.google.com/maps/api/js">
+      <map center="42.2928590,-82.9147780" zoom="11" map-type-id="satellite" style="height: 500px;">
+        <marker ng-repeat="loc in services"
+                position="{{loc.address}}"
+                title="{{loc.status}}: {{loc.name}} - {{loc.address}}"
+                icon="/images/{{loc.status}}.png">
+        </marker>
+      </map>
+    </div>
   </div>
 </div>
