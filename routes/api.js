@@ -27,4 +27,24 @@ router.get('/', function(req, res, next) {
     });
 });
 
+// create service
+router.post('/', function (req, res, next) {
+  var db = req.app.get('db');
+
+  db.Service.build(req.body.data)
+    .save()
+    .then(function(service) {
+      if (!service) {
+        res.json({success: false});
+      }
+      else {
+        res.json({success: true});
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.json({success: false});
+    });
+});
+
 module.exports = router;

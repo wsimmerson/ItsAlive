@@ -5,3 +5,4 @@ require('./config/routes');
 
 require('./directives/nav');
 require('./directives/frontPage');
+require('./directives/newService');

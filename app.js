@@ -31,6 +31,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.locals.title = "It's Alive!";
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');

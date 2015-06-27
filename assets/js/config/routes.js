@@ -4,6 +4,9 @@ angular.module('ItsAliveApp')
       .when('/', {
         template: "<front-page />"
       })
+      .when('/new', {
+        template: "<new-service />"
+      })
       .otherwise({
         redirectTo: '/'
       });

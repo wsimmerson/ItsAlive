@@ -6,13 +6,17 @@ require('./config/routes');
 
 require('./directives/nav');
 require('./directives/frontPage');
+require('./directives/newService');
 
-},{"./config/routes":2,"./directives/frontPage":3,"./directives/nav":4}],2:[function(require,module,exports){
+},{"./config/routes":2,"./directives/frontPage":3,"./directives/nav":4,"./directives/newService":5}],2:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationprovider) {
     $routeProvider
       .when('/', {
         template: "<front-page />"
+      })
+      .when('/new', {
+        template: "<new-service />"
       })
       .otherwise({
         redirectTo: '/'
@@ -49,6 +53,34 @@ angular.module('ItsAliveApp')
       templateUrl: "partials/nav.html",
       controller: function($scope, $location) {
 
+      }
+    };
+  });
+
+},{}],5:[function(require,module,exports){
+angular.module('ItsAliveApp')
+  .directive("newService", function() {
+    return {
+      replace: true,
+      restrict: "E",
+      scope: {},
+      templateUrl: "partials/newService.html",
+      controller: function($scope, $http, $location) {
+        $scope.data = {};
+        $scope.data.status = "warning";
+
+        $scope.create = function () {
+          $http.post("/api/", {data:$scope.data})
+            .then(function(res) {
+              console.log(res);
+              if (res.data.success) {
+                $location.path('/');
+              }
+              else {
+
+              }
+            });
+        };
       }
     };
   });
