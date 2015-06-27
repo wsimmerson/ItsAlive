@@ -5,10 +5,11 @@ angular.module('ItsAliveApp')
       restrict: "E",
       scope: {},
       templateUrl: "partials/front.html",
-      controller: function ($scope, $http, $interval) {
+      controller: function ($scope, $http, $interval, userService) {
         $scope.services = [];
 
         $scope.init = function() {
+          userService.restrictAuth();
           $http.get("/api/")
           .then(function(res) {
             if (res.data.success) {

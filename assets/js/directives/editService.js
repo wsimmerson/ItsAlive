@@ -5,8 +5,9 @@ angular.module('ItsAliveApp')
       restrict: "E",
       scope: {},
       templateUrl: "partials/editService.html",
-      controller: function($scope, $http, $location, $routeParams) {
+      controller: function($scope, $http, $location, $routeParams, userService) {
         $scope.data = {};
+        userService.restrictAuth();
 
         $scope.update = function () {
           $http.put("/api/"+$scope.data.id, {data:$scope.data})

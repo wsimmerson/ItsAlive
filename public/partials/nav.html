@@ -5,7 +5,14 @@
         <img src="/images/munster.jpg" alt="Brand" style="height: 25px; display: inline"/> It's Alive!
       </a>
     </div>
-    <div class="navbar-text"><strong></strong></div>
+
+    <button ng-click="logOut()"
+            class="btn btn-sm btn-warning navbar-btn navbar-right"
+            style="margin-right: 20px"
+            ng-show="authenticated">
+        <span class="glyphicon glyphicon-log-out"></span>
+    </button>
+
     <div class="navbar-text navbar-right" style="margin-right: 20px">{{datetime | date:'medium'}}</div>
   </div>
 </nav>

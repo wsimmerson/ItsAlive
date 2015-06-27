@@ -38,7 +38,7 @@ var users = require('./routes/users');
 var api = require('./routes/api');
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/user', users);
 app.use('/api', api);
 
 // catch 404 and forward to error handler

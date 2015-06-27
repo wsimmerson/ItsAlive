@@ -1,5 +1,9 @@
 var express = require('express');
+var auth = require('../lib/auth');
+
 var router = express.Router();
+
+router.use(auth.authRequired);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

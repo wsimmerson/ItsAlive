@@ -10,6 +10,9 @@ angular.module('ItsAliveApp')
       .when('/service/:id', {
         template: "<edit-service />"
       })
+      .when('/login', {
+        template: "<login />"
+      })
       .when('/404', {
         template: "<not-found />"
       })
