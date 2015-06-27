@@ -7,6 +7,12 @@ angular.module('ItsAliveApp')
       .when('/new', {
         template: "<new-service />"
       })
+      .when('/service/:id', {
+        template: "<edit-service />"
+      })
+      .when('/404', {
+        template: "<not-found />"
+      })
       .otherwise({
         redirectTo: '/'
       });

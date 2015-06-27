@@ -7,8 +7,10 @@ require('./config/routes');
 require('./directives/nav');
 require('./directives/frontPage');
 require('./directives/newService');
+require('./directives/editService');
+require('./directives/notFound');
 
-},{"./config/routes":2,"./directives/frontPage":3,"./directives/nav":4,"./directives/newService":5}],2:[function(require,module,exports){
+},{"./config/routes":2,"./directives/editService":3,"./directives/frontPage":4,"./directives/nav":5,"./directives/newService":6,"./directives/notFound":7}],2:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationprovider) {
     $routeProvider
@@ -18,6 +20,12 @@ angular.module('ItsAliveApp')
       .when('/new', {
         template: "<new-service />"
       })
+      .when('/service/:id', {
+        template: "<edit-service />"
+      })
+      .when('/404', {
+        template: "<not-found />"
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -26,6 +34,57 @@ angular.module('ItsAliveApp')
   }]);
 
 },{}],3:[function(require,module,exports){
+angular.module('ItsAliveApp')
+  .directive("editService", function() {
+    return {
+      replace: true,
+      restrict: "E",
+      scope: {},
+      templateUrl: "partials/editService.html",
+      controller: function($scope, $http, $location, $routeParams) {
+        $scope.data = {};
+
+        $scope.update = function () {
+          $http.put("/api/"+$scope.data.id, {data:$scope.data})
+            .then(function(res) {
+              console.log(res);
+              if (res.data.success) {
+                $location.path('/');
+              }
+              else {
+
+              }
+            });
+        };
+
+        $scope.delete = function () {
+          $http.delete("/api/"+$scope.data.id)
+          .then(function(res) {
+            if (res.data.success) {
+              $location.path('/');
+            }
+          });
+        };
+
+        $scope.init = function () {
+          $http.get("/api/"+$routeParams.id)
+            .then(function(res) {
+              console.log(res);
+              if (res.data.success) {
+                $scope.data = res.data.service;
+              }
+              else {
+                $location.path('/404');
+              }
+            });
+        };
+
+        $scope.init();
+      }
+    };
+  });
+
+},{}],4:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .directive("frontPage", function() {
     return {
@@ -43,7 +102,7 @@ angular.module('ItsAliveApp')
     };
   });
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .directive("navBar", function() {
     return {
@@ -57,7 +116,7 @@ angular.module('ItsAliveApp')
     };
   });
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .directive("newService", function() {
     return {
@@ -81,6 +140,20 @@ angular.module('ItsAliveApp')
               }
             });
         };
+      }
+    };
+  });
+
+},{}],7:[function(require,module,exports){
+angular.module("ItsAliveApp")
+  .directive("notFound", function() {
+    return {
+      restrict: "E",
+      replace: true,
+      $scope: {},
+      templateUrl: "partials/404.html",
+      controller: function() {
+
       }
     };
   });
