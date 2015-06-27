@@ -8,6 +8,56 @@ var app = require('../app');
 var debug = require('debug')('its-alive:server');
 var http = require('http');
 
+var ping = require('ping');
+var cron = require('cron');
+var db = require('../models');
+
+var job = new cron.CronJob('*/20 * * * * *', function() {
+  var date = new Date(new Date() - 300000);
+
+  function checkStatus(service) {
+    return ping.promise.probe(service.ipaddress)
+      .then(function(res) {
+        if (res.alive) {
+          if (service.status == "down") {
+            service.updateAttributes({status: 'warning'});
+          }
+          else {
+            service.updateAttributes({status: 'up'});
+          }
+        }
+        else {
+          if (service.status == "up") {
+            service.updateAttributes({status: 'warning'});
+          }
+          else {
+            service.updateAttributes({status: 'down'});
+          }
+        }
+      });
+  }
+  db.Service.findAll({where:
+    {
+      updatedAt: {
+        $lt: date
+      }
+    }
+  })
+  .then(function(services) {
+    if (!services) {}
+    else {
+      for (var c =0; c<services.length; c++) {
+        checkStatus(services[c]);
+      }
+    }
+  })
+  .catch(function(err){
+    console.log(err);
+  });
+}, null, true, 'America/toronto');
+
+job.start();
+
 /**
  * Get port from environment and store in Express.
  */

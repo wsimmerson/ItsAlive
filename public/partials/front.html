@@ -11,15 +11,21 @@
       </tr>
       <tr ng-repeat="service in services | filter:{status: 'down'} track by $index">
         <td><img src="/images/{{service.status}}.png"></td>
-        <td><a href="/service/{{service.id}}">{{service.name}}</a><br> {{service.address}}</td>
+        <td><a href="/service/{{service.id}}">{{service.name}}</a>
+            <br> {{service.address}}
+            <br> Last Checked: {{service.updatedAt | date:'medium'}}</td>
       </tr>
       <tr ng-repeat="service in services | filter:{status: 'warning'} track by $index">
         <td><img src="/images/{{service.status}}.png"></td>
-        <td><a href="/service/{{service.id}}">{{service.name}}</a><br> {{service.address}}</td>
+        <td><a href="/service/{{service.id}}">{{service.name}}</a>
+            <br> {{service.address}}
+            <br> Last Checked: {{service.updatedAt | date:'medium'}}</td>
       </tr>
-      <tr ng-repeat="service in services | filter:{starus: 'up'} track by $index">
+      <tr ng-repeat="service in services | filter:{status: 'up'} track by $index">
         <td><img src="/images/{{service.status}}.png"></td>
-        <td><a href="/service/{{service.id}}">{{service.name}}</a><br> {{service.address}}</td>
+        <td><a href="/service/{{service.id}}">{{service.name}}</a>
+            <br> {{service.address}}
+            <br> Last update {{service.updatedAt | date:'medium'}}</td>
       </tr>
 
     </table>
