@@ -1,36 +1,47 @@
 <div style="margin-top: 50px;">
-  <div class="col-sm-12 col-md-4">
+  <div class="col-sm-12" ng-class="table_visible ? 'col-md-4' : 'col-md-12'">
 
     <table class="table table-striped table-condensed table-bordered">
-      <tr>
-
-        <td colspan="2">
-          <a href="/new" class="btn btn-xs btn-primary pull-right" title="Add Service">
-          <span class="glyphicon glyphicon-plus"></span>
-        </a></td>
-      </tr>
-      <tr ng-repeat="service in services | filter:{status: 'down'} track by $index">
-        <td><img src="/images/{{service.status}}.png"></td>
-        <td><a href="/service/{{service.id}}">{{service.name}}</a>
-            <br> {{service.address}}
-            <br> Last Checked: {{service.updatedAt | date:'medium'}}</td>
-      </tr>
-      <tr ng-repeat="service in services | filter:{status: 'warning'} track by $index">
-        <td><img src="/images/{{service.status}}.png"></td>
-        <td><a href="/service/{{service.id}}">{{service.name}}</a>
-            <br> {{service.address}}
-            <br> Last Checked: {{service.updatedAt | date:'medium'}}</td>
-      </tr>
-      <tr ng-repeat="service in services | filter:{status: 'up'} track by $index">
-        <td><img src="/images/{{service.status}}.png"></td>
-        <td><a href="/service/{{service.id}}">{{service.name}}</a>
-            <br> {{service.address}}
-            <br> Last update {{service.updatedAt | date:'medium'}}</td>
-      </tr>
-
+      <thread>
+        <tr>
+          <th colspan="2">
+            <button class="btn btn-xs btn-default"
+                    ng-click="toggle_visible()">
+                    <span class="glyphicon"
+                          ng-class="table_visible ? 'glyphicon-eye-close' : 'glyphicon-eye-open'"></span>
+            </button>
+            <a href="/new"
+               class="btn btn-xs btn-primary pull-right"
+               title="Add Service">
+               <span class="glyphicon glyphicon-plus"></span>
+             </a>
+           </th>
+        </tr>
+      </thread>
+      <tbody ng-show="table_visible">
+        <tr ng-repeat="service in services | filter:{status: 'down'} track by $index">
+          <td><img src="/images/{{service.status}}.png"></td>
+          <td><a href="/service/{{service.id}}">{{service.name}}</a>
+              <br> {{service.address}}
+              <br> Last Checked: {{service.updatedAt | date:'medium'}}</td>
+        </tr>
+        <tr ng-repeat="service in services | filter:{status: 'warning'} track by $index">
+          <td><img src="/images/{{service.status}}.png"></td>
+          <td><a href="/service/{{service.id}}">{{service.name}}</a>
+              <br> {{service.address}}
+              <br> Last Checked: {{service.updatedAt | date:'medium'}}</td>
+        </tr>
+        <tr ng-repeat="service in services | filter:{status: 'up'} track by $index">
+          <td><img src="/images/{{service.status}}.png"></td>
+          <td><a href="/service/{{service.id}}">{{service.name}}</a>
+              <br> {{service.address}}
+              <br> Last update {{service.updatedAt | date:'medium'}}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
-  <div class="col-sm-12 col-md-8">
+  <div class="col-sm-12"
+       ng-class="table_visible ? 'col-md-8' : 'col-md-12'">
     <div map-lazy-load="http://maps.google.com/maps/api/js">
       <map center="42.2928590,-82.9147780" zoom="11" map-type-id="satellite" style="height: 500px;">
         <marker ng-repeat="loc in services"

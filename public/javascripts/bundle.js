@@ -102,6 +102,11 @@ angular.module('ItsAliveApp')
       templateUrl: "partials/front.html",
       controller: function ($scope, $http, $interval, userService) {
         $scope.services = [];
+        $scope.table_visible = true;
+
+        $scope.toggle_visible = function () {
+          $scope.table_visible = $scope.table_visible === true ? false : true;
+        };
 
         $scope.init = function() {
           userService.restrictAuth();
