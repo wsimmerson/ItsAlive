@@ -1,6 +1,6 @@
 <h2>It's Alive!</h2>
 <h4>Simple network resource monitor with Geo-visualization</h4>
-<p>Uses system ping to check if an IPv4 address is on line in the background while service a webapp for viewing and managing data</p>
+<p>Uses system ping to check if an IPv4 address is on line in the background while serving a webapp for viewing and managing data</p>
 
 ![screenshot](https://raw.github.com/wsimmerson/itsAlive/master/public/images/screenshot.png)
 
