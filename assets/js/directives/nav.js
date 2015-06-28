@@ -10,8 +10,11 @@ angular.module('ItsAliveApp')
         $scope.datetime = "";
 
         $scope.authenticated = userService.isAuthenticated();
+        $scope.isAdmin = userService.isAdmin();
+        
         $scope.$on('logged', function () {
           $scope.authenticated = userService.isAuthenticated();
+          $scope.isAdmin = userService.isAdmin();
         });
 
         $scope.logOut = userService.logOut;

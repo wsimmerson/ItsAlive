@@ -295,8 +295,11 @@ angular.module('ItsAliveApp')
         $scope.datetime = "";
 
         $scope.authenticated = userService.isAuthenticated();
+        $scope.isAdmin = userService.isAdmin();
+        
         $scope.$on('logged', function () {
           $scope.authenticated = userService.isAuthenticated();
+          $scope.isAdmin = userService.isAdmin();
         });
 
         $scope.logOut = userService.logOut;
@@ -399,6 +402,7 @@ angular.module("ItsAliveApp")
         delete $window.sessionStorage.authenticated;
         delete $window.sessionStorage.email;
         delete $window.sessionStorage.id;
+        delete $window.sessionStorage.isAdmin;
         $rootScope.$broadcast('logged');
         $location.path('/login');
       },
@@ -406,11 +410,15 @@ angular.module("ItsAliveApp")
         $window.sessionStorage.authenticated = true;
         $window.sessionStorage.email = data.user.email;
         $window.sessionStorage.id = data.user.id;
+        $window.sessionStorage.isAdmin = data.user.isAdmin;
         $window.sessionStorage.token = data.token;
         $rootScope.$broadcast('logged');
       },
       isAuthenticated: function(data) {
         return $window.sessionStorage.authenticated;
+      },
+      isAdmin: function(data) {
+        return ($window.sessionStorage.isAdmin == "false") ? false: true;
       },
       restrictAuth: function() {
         if ($window.sessionStorage.authenticated === "false" ||

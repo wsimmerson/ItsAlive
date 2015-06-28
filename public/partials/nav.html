@@ -13,6 +13,13 @@
         <span class="glyphicon glyphicon-log-out"></span>
     </button>
 
+    <a href="/admin"
+       class="btn btn-sm btn-primary navbar-btn navbar-right"
+       style="margin-right: 10px"
+       ng-show="isAdmin">
+       <span class="glyphicon glyphicon-cog"</span>
+    </a>
+
     <div class="navbar-text navbar-right" style="margin-right: 20px">{{datetime | date:'medium'}}</div>
   </div>
 </nav>

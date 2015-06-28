@@ -26,7 +26,8 @@ router.post('/login', function(req, res, next) {
             else {
               var data = {
                 id: user.id,
-                email: user.email
+                email: user.email,
+                isAdmin: user.isAdmin
               };
 
               var token = jwt.sign(data, req.app.get('secret'));
