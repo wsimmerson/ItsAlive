@@ -2,6 +2,8 @@
 <h4>Simple network resource monitor with Geo-visualization</h4>
 <p>Uses system ping to check if an IPv4 address is on line in the background while service a webapp for viewing and managing data</p>
 
+![screenshot](https://raw.github.com/wsimmerson/itsAlive/master/public/images/screenshot.png)
+
 <p>requires a config/config.json file a la sequelize for db config. e.g. </p>
 
 ```
