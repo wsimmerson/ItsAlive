@@ -16,6 +16,15 @@ angular.module('ItsAliveApp')
       .when('/404', {
         template: "<not-found />"
       })
+      .when('/admin', {
+        template: "<admin-list />"
+      })
+      .when('/admin/new', {
+        template: "<admin-new />"
+      })
+      .when('/admin/:id', {
+        template: "<admin-view />"
+      })
       .otherwise({
         redirectTo: '/'
       });

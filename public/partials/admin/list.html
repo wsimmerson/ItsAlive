@@ -1,0 +1,29 @@
+<div>
+  <div ng-if="!data.authorized" class="alert alert-warning">
+    Access Denied!
+  </div>
+  <div ng-if="data.authorized">
+    <h2>Users</h2>
+    <table class="table table-stripped table-condensed">
+      <thread>
+        <tr>
+          <th>Email</th>
+          <th>
+            Is Admin?
+            <a href="/admin/new"
+               title="Add a user"
+               class="btn btn-xs btn-primary pull-right">
+              <span class="glyphicon glyphicon-plus"></span>
+            </a>
+          </th>
+        </tr>
+      </thread>
+      <tbody>
+        <tr ng-repeat="user in data.users">
+          <td><a href="/admin/{{user.id}}">{{user.email}}</a></td>
+          <td>{{user.isAdmin}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

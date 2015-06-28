@@ -36,10 +36,12 @@ app.locals.title = "It's Alive!";
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
+var admin = require('./routes/admin');
 
 app.use('/', routes);
 app.use('/user', users);
 app.use('/api', api);
+app.use('/api/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

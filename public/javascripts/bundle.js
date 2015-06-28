@@ -10,11 +10,12 @@ require('./directives/newService');
 require('./directives/editService');
 require('./directives/notFound');
 require('./directives/login');
+require('./directives/admin');
 
 require('./services/userService');
 require('./services/tokenInterceptor');
 
-},{"./config/routes":2,"./directives/editService":3,"./directives/frontPage":4,"./directives/login":5,"./directives/nav":6,"./directives/newService":7,"./directives/notFound":8,"./services/tokenInterceptor":9,"./services/userService":10}],2:[function(require,module,exports){
+},{"./config/routes":2,"./directives/admin":3,"./directives/editService":4,"./directives/frontPage":5,"./directives/login":6,"./directives/nav":7,"./directives/newService":8,"./directives/notFound":9,"./services/tokenInterceptor":10,"./services/userService":11}],2:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationprovider) {
     $routeProvider
@@ -33,6 +34,15 @@ angular.module('ItsAliveApp')
       .when('/404', {
         template: "<not-found />"
       })
+      .when('/admin', {
+        template: "<admin-list />"
+      })
+      .when('/admin/new', {
+        template: "<admin-new />"
+      })
+      .when('/admin/:id', {
+        template: "<admin-view />"
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -41,6 +51,117 @@ angular.module('ItsAliveApp')
   }]);
 
 },{}],3:[function(require,module,exports){
+angular.module("ItsAliveApp")
+  .directive('adminList', function () {
+    return {
+      replace: true,
+      restrict: "E",
+      scope: {},
+      templateUrl: "partials/admin/list.html",
+      controller: function ($scope, $http) {
+        $scope.data = {};
+        $scope.data.authorized = false;
+        $scope.data.users = [];
+
+        $scope.init = function() {
+            $http.get('/api/admin/user')
+              .then(function(res) {
+                if (res.data.success) {
+                  $scope.data.authorized = true;
+                  $scope.data.users = res.data.users;
+                }
+              });
+        };
+
+        $scope.init();
+      }
+    };
+  })
+  .directive('adminNew', function () {
+    return {
+      replace: true,
+      restrict: "E",
+      scope: {},
+      templateUrl: "partials/admin/new.html",
+      controller: function ($scope, $http, $location) {
+        $scope.data = {};
+        $scope.data.authorized = false;
+        $scope.data.user = {};
+
+        $scope.init = function() {
+            $http.get('/api/admin/user/')
+              .then(function(res) {
+                if (res.data.success) {
+                  $scope.data.authorized = true;
+                }
+              });
+        };
+
+        $scope.create = function(){
+          $http.post('/api/admin/user', {user: $scope.data.user})
+          .then(function(res) {
+            if (res.data.success) {
+              $location.path('/admin');
+            }
+            else {
+              $scope.data.message = "Failed to create the user";
+            }
+          });
+        };
+
+        $scope.init();
+      }
+    };
+  })
+  .directive('adminView', function () {
+    return {
+      replace: true,
+      restrict: "E",
+      scope: {},
+      templateUrl: "partials/admin/view.html",
+      controller: function ($scope, $http, $routeParams, $location) {
+        $scope.data = {};
+        $scope.data.authorized = false;
+        $scope.data.user = {};
+
+        $scope.init = function() {
+            $http.get('/api/admin/user/'+$routeParams.id)
+              .then(function(res) {
+                if (res.data.success) {
+                  $scope.data.authorized = true;
+                  $scope.data.user = res.data.user;
+                }
+              });
+        };
+
+        $scope.update = function () {
+          $http.put('/api/admin/user/'+$routeParams.id, {user: $scope.data.user})
+            .then(function(res) {
+              if (res.data.success) {
+                $scope.data.message = "User Updated!";
+              }
+              else ($scope.data.message = "Failed to update user");
+            });
+        };
+
+        $scope.delete = function () {
+          $http.delete('/api/admin/user/'+$routeParams.id)
+          .then(function(res) {
+            if (res.data.success) {
+              $location.path("/admin");
+            }
+            else {
+              $scope.data.message = "Deletion Failed!";
+            }
+          });
+        };
+
+        $scope.init();
+      }
+    };
+  });
+
+},{}],4:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .directive("editService", function() {
     return {
@@ -92,7 +213,7 @@ angular.module('ItsAliveApp')
     };
   });
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .directive("frontPage", function() {
     return {
@@ -133,7 +254,7 @@ angular.module('ItsAliveApp')
     };
   });
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 angular.module("ItsAliveApp")
   .directive("login", function() {
     return {
@@ -161,7 +282,7 @@ angular.module("ItsAliveApp")
     };
   });
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .directive("navBar", function() {
     return {
@@ -188,7 +309,7 @@ angular.module('ItsAliveApp')
     };
   });
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 angular.module('ItsAliveApp')
   .directive("newService", function() {
     return {
@@ -218,7 +339,7 @@ angular.module('ItsAliveApp')
     };
   });
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 angular.module("ItsAliveApp")
   .directive("notFound", function() {
     return {
@@ -232,7 +353,7 @@ angular.module("ItsAliveApp")
     };
   });
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 angular.module("ItsAliveApp")
 .factory("tokenInterceptor", function ($q, $location, $window){
   return {
@@ -263,7 +384,7 @@ angular.module("ItsAliveApp")
   $httpProvider.interceptors.push('tokenInterceptor');
 });
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 angular.module("ItsAliveApp")
   .factory('userService', function($http, $window, $location, $rootScope){
     return {

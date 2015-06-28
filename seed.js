@@ -2,7 +2,8 @@ var db = require('./models');
 
 db.User.build({
   email: 'admin@example.com',
-  password: 'admin'
+  password: 'admin',
+  isAdmin: 'true'
 }).save()
   .then(function() {
     return db.User.find({where:{'email':'admin@example.com'}})

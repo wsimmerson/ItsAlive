@@ -1,0 +1,21 @@
+<div class="form-group">
+  <div class="alert alert-warning" ng-if="!data.authorized">Access Denied!</div>
+  <div ng-if="data.authorized">
+    <h2>Edit User</h2>
+    <div class="alert alert-warning" ng-show="data.message">{{data.message}}</div>
+    <label>Email</label>
+    <input ng-model="data.user.email" class="form-control">
+    <label>Is Administrator</label>
+    <select ng-model="data.user.isAdmin"
+            class="form-control"
+            ng-options="i as i for i in {true:true, false:false}">
+    </select>
+    <label>Password Reset</label>
+    <input type="password" ng-model="data.user.password" class="form-control">
+    <br>
+    <button class="btn btn-sm btn-primary"
+            ng-click="update()">Update</button>
+    <button class="btn btn-sm btn-danger"
+            ng-click="delete()">Delete</button>
+  </div>
+</div>

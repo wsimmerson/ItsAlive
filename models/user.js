@@ -12,7 +12,8 @@ module.exports = function(sequelize, DataTypes) {
         var hash = bcrypt.hashSync(pass, salt);
         this.setDataValue('password', hash);
       }
-    }
+    },
+    isAdmin: DataTypes.BOOLEAN,
   }, {
     classMethods: {
       associate: function(models) {
