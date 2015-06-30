@@ -8,6 +8,13 @@
   <input name="address" class="form-control" ng-model="data.address" />
   <label>IPv4 Address</label>
   <input name="ipaddress" class="form-control" ng-model="data.ipaddress" />
+  <label>GEO</label> Use <a href="http://mygeoposition.com/" target="_blank">This tool</a> to get Co-ords
+  <div class="input-group">
+    <label class="input-group-addon">Latitude</label>
+    <input name="latitude" class="form-control" ng-model="data.latitude" placeholder="42.3077810"/>
+    <label class="input-group-addon">Longitude</label>
+    <input name="longitude" class="form-control" ng-model="data.longitude" placeholder="-83.0269900" />
+  </div>
   <br>
   <button ng-click="create()" class="btn btn-sm btn-primary">Create!</button>
 </div>
